@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>영역1</title>
+    <style>
+        /* 원하는 스타일을 추가하세요 */
+        body {
+            text-align: center;
+        }
+        .container {
+            border: 1px solid black;
+            margin: 20px auto;
+            max-width: 400px;
+            padding: 10px;
+        }
+        .area1 {
+            /* 영역1의 스타일을 추가하세요 */
+        }
+        .area2 {
+            float: left;
+            width: 50%;
+        }
+        .area3 {
+            float: right;
+            width: 50%;
+        }
+        .button {
+            display: block;
+            width: 30%;
+            margin-bottom: 10px;
+            /* 버튼 스타일을 추가하세요 */
+        }
+        #loginbtn {
+            width: 40%;
+        }
+        /* 로그인 폼 스타일 */
+        .login-form {
+            text-align: left;
+        }
+        .form-field {
+            margin-bottom: 10px;
+        }
+        /* 이미지 박스 스타일 */
+        .image-box {
+            display: none;
+            padding: 10px;
+        }
+        /* 이미지 스타일 */
+        .image {
+            max-width: 100px; 
+            height: 100px; /* 높이를 자동으로 조정하여 비율을 유지합니다. */
+        }
+        /* ID와 PW 입력란 숨김 스타일 */
+        #username, #password {
+            display: inline-block; /* display 값을 변경하여 인라인 블록 요소로 변경 */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="area1">
+            <div class="login-form" id="loginForm">
+                <h2 id = "login-title">로그인</h2>
+                <div class="image-box" id="imageBox">
+                    <!-- 이미지 박스 내용 -->
+                    <img class="image" src="tp.jpg" alt="이미지">
+                    <p id="idDisplay"></p>
+                    
+                </div>
+                <div class="form-field">
+                    <input type="text" id="username" name="username" placeholder="ID :" required>
+                </div>
+                <div class="form-field">
+                    <input type="password" id="password" name="password" placeholder="PW :" required>
+                </div>
+                <button type="button" class="button" id="loginbtn">로그인</button>
+            </div>
+            
+        </div>
+        <div class="area2">
+            <button class="button" id="introButton1">버튼1</button>
+            <button class="button" id="introButton2">버튼2</button>
+            <button class="button" id="introButton3">버튼3</button>
+        </div>
+        <div class="area3" id="outputArea">
+            <!-- 여기에 자기소개 내용이 출력됩니다. -->
+        </div>
+        <div style="clear:both;"></div>
+    </div>
+
+    <script>
+        var introContent1 = "자기소개1";
+        var introContent2 = "자기소개2";
+        var introContent3 = "";
+        var logintf = true;
+    
+// 로그인 버튼 클릭 시
+document.getElementById('loginbtn').addEventListener('click', function () {
+    var logintitle = document.getElementById('login-title');
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
+    var imageBox = document.getElementById('imageBox');
+    
+    if(username.value == "" || password.value == ""){
+        alert("ID/PW 확인.");
+        return;
+    }
+    idDisplay.textContent = username.value;
+    // 클릭 횟수를 확인하여 동작 결정
+    if (logintf) {
+        // 짝수번 클릭 시
+        logintitle.style.display = 'none';
+        username.style.display = 'none';
+        password.style.display = 'none';
+        imageBox.style.display = 'block';
+        loginbtn.textContent = "로그아웃";
+    } else {
+        // 홀수번 클릭 시 (원래 동작으로 복원)
+        logintitle.style.display = 'inline';
+        username.style.display = 'block';
+        password.style.display = 'block';
+        imageBox.style.display = 'none';
+        loginbtn.textContent = "로그인";
+        username.value = "";
+        password.value = "";
+    }
+
+    // 클릭 횟수 업데이트
+    logintf = !logintf;
+        });
+
+
+        // 버튼1을 클릭하면 자기소개 1 출력
+        document.getElementById('introButton1').addEventListener('click', function () {
+            // 버튼1 내용 있을 때
+            if (introContent1 != "") {
+                document.getElementById('outputArea').innerHTML = introContent1;
+            }
+            // 버튼1 비었을 때
+            else {
+                // 영역3이 빈 칸, 저장되었습니다 일때
+                if (document.getElementById('outputArea').innerHTML == "" || document.getElementById('outputArea').innerHTML == "저장되었습니다") {
+                    alert("내용이 없습니다.");
+                }
+                // 다른 버튼의 내용이 들어있을 때
+                else {
+                    introContent1 = document.getElementById('outputArea').innerHTML;
+                    if (document.getElementById('outputArea').innerHTML == introContent2) {
+                        introContent1 = introContent2;
+                        introContent2 = "";
+                        document.getElementById('outputArea').innerHTML = "저장되었습니다";
+                    }
+                    else if (document.getElementById('outputArea').innerHTML == introContent3) {
+                        introContent1 = introContent3;
+                        introContent3 = "";
+                        document.getElementById('outputArea').innerHTML = "저장되었습니다";
+                    }
+                }
+            }
+        });
+
+        // 버튼2를 클릭하면 자기소개 2 출력
+        document.getElementById('introButton2').addEventListener('click', function () {
+            // 버튼1 내용 있을 때
+            if (introContent2 != "") {
+                document.getElementById('outputArea').innerHTML = introContent2;
+            }
+            // 버튼1 비었을 때
+            else {
+                // 영역3이 빈 칸, 저장되었습니다 일때
+                if (document.getElementById('outputArea').innerHTML == "" || document.getElementById('outputArea').innerHTML == "저장되었습니다") {
+                    alert("내용이 없습니다.");
+                }
+                // 다른 버튼의 내용이 들어있을 때
+                else {
+                    introContent2 = document.getElementById('outputArea').innerHTML;
+                    if (document.getElementById('outputArea').innerHTML == introContent1) {
+                        introContent2 = introContent1;
+                        introContent1 = "";
+                        document.getElementById('outputArea').innerHTML = "저장되었습니다";
+                    }
+                    else if (document.getElementById('outputArea').innerHTML == introContent3) {
+                        introContent2 = introContent3;
+                        introContent3 = "";
+                        document.getElementById('outputArea').innerHTML = "저장되었습니다";
+                    }
+                }
+            }
+        });
+
+        // 버튼3를 클릭하면 내용이 없으면 팝업 표시
+        document.getElementById('introButton3').addEventListener('click', function () {
+            // 버튼1 내용 있을 때
+            if (introContent3 != "") {
+                document.getElementById('outputArea').innerHTML = introContent3;
+            }
+            // 버튼1 비었을 때
+            else {
+                // 영역3이 빈 칸, 저장되었습니다 일때
+                if (document.getElementById('outputArea').innerHTML == "" || document.getElementById('outputArea').innerHTML == "저장되었습니다") {
+                    alert("내용이 없습니다.");
+                }
+                // 다른 버튼의 내용이 들어 있을 때
+                else {
+                    introContent3 = document.getElementById('outputArea').innerHTML;
+                    if (document.getElementById('outputArea').innerHTML == introContent1) {
+                        introContent3 = introContent1;
+                        introContent1 = "";
+                        document.getElementById('outputArea').innerHTML = "저장되었습니다";
+                    }
+                    else if (document.getElementById('outputArea').innerHTML == introContent2) {
+                        introContent3 = introContent2;
+                        introContent2 = "";
+                        document.getElementById('outputArea').innerHTML = "저장되었습니다";
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
