@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>서버에서 문자열 받아내기</title>
+</head>
+<body>
+    <p id="serverString">여기에 응답이 표시됩니다.</p>
+    <button id="btn">버튼을 눌러 /hi 요청 보내기</button>
+
+    <script>
+        var serverString = document.getElementById('serverString');
+        var btn = document.getElementById('btn');
+
+        // fetch()로 받아온 응답을 체크하는 함수, 잘 받아왔으면 .text를 다음 then으로 반환
+        function checkResponse(response) {
+            if (response.ok) {
+                return response.text();
+            } else {
+                throw new Error('요청 중 오류 발생');
+            }
+        }
+
+        // checkResponse에서 받아온 text를 serverString텍스트에 저장
+        function displayResponse(data) {
+            serverString.textContent = data; // 응답을 화면에 표시
+        }
+
+        // 에러나면 표시
+        function handleError(error) {
+            console.error('오류:', error);
+        }
+
+        btn.addEventListener('click', function () {
+            // /hi 경로로 GET 요청 보내기(기본 GET이고 밑에 method: '모시깽' 으로 바꿔줄 수 있음)
+            // 성공하면 then 실패하면 catch
+            // then 으로 가면 Response 객체로 반환, cath는 Error로 반환
+            fetch('/hi') 
+                .then(checkResponse)
+                .then(displayResponse)
+                .catch(handleError);
+        });
+    </script>
+</body>
+</html>
